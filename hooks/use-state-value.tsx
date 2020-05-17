@@ -1,8 +1,10 @@
 import React, { createContext, useContext, useReducer } from 'react';
 import { stateValueReducer, initialState } from '../reducers/state-value-reducer';
 import { Action } from 'types/action';
+import { State } from 'types/state';
 
-export const StateContext = createContext([initialState, (_: Action) => {}]);
+const initialContext: [State, (a: Action) => void ] = [initialState, (_: Action) => {}];
+export const StateContext = createContext(initialContext);
 
 export const StateProvider: React.FC = ({
     children,
@@ -16,4 +18,4 @@ export const StateProvider: React.FC = ({
     );
 };
 
-export const useStateValue = () => useContext(StateContext);
+export default () => useContext(StateContext);

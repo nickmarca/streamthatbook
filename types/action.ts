@@ -1,15 +1,24 @@
-import type { User } from './user';
+import type { Book } from './book';
 import { ActionType } from '../constants/action-type';
 
-type SignupAction = {
-    type: ActionType.Signup;
-    payload: {
-        user: User;
-    };
+export type SearchActionRequest = {
+    type: ActionType.Search;
+    keyword: string;
 }
 
-type SignoutAction = {
-    type: ActionType.Signout;
+export type SearchActionPayload = {
+    books: Map<string, Book>;
 }
 
-export type Action = SignupAction | SignoutAction;
+export type SearchActionResponse = {
+    type: ActionType.Search;
+    payload: SearchActionPayload;
+}
+
+type OtherPayload = {
+    a: string;
+}
+
+export type Action = SearchActionRequest | SearchActionResponse;
+
+export type Payload = SearchActionPayload | OtherPayload;

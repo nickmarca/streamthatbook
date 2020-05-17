@@ -1,32 +1,32 @@
 import { Reducer } from 'react';
-import type { State } from '../types/state';
-import type { Action } from '../types/action';
+import type { State, Handlers } from '../types/state';
+import type { Action, Payload } from '../types/action';
 import { ActionType } from '../constants/action-type';
-import { none } from 'ts-option';
+import booksReducer, { initialBooks } from './books-reducer';
 
 export const initialState: State = {
-  user: none,
+    books: initialBooks,
 };
 
-export const stateValueReducer: Reducer<State, Action> = (state = initialState, action) => {
-    const handler = handlers.get(action.type);
-    if (handler) {
-        return handler.apply({}, [state, action]);
+export const stateValueReducer: Reducer<State, Action> = (
+    state = initialState,
+    action
+) => {
+    const handlers = middlewares.get(action.type);
+    if (handlers) {
+        const [requestHandler, responseHandler] = handlers;
+        const payload = requestHandler(state, action);
+       
+        return responseHandler(
+            state,
+            action,
+            payload,
+        );
     }
 
     return state;
 };
 
-
-const reducerCaseSignup: Reducer<State, Action> = (state, action) => {
-    return state;
-}
-
-const reducerCaseSignout: Reducer<State, Action> = (state, action) => {
-    return state;
-}
-
-const handlers = new Map([
-   [ActionType.Signup, reducerCaseSignup],
-   [ActionType.Signout, reducerCaseSignout],
+const middlewares = new Map<ActionType, Handlers<Action, Payload>>([
+    booksReducer,
 ]);

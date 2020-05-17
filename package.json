@@ -19,6 +19,7 @@
     "react-native-reanimated": "^1.8.0",
     "react-native-safe-area-context": "^1.0.0",
     "react-native-screens": "^2.7.0",
+    "react-native-svg": "^12.1.0",
     "ts-option": "^2.1.0"
   },
   "devDependencies": {
@@ -34,8 +35,8 @@
     "eslint": "^6.5.1",
     "jest": "^24.9.0",
     "metro-react-native-babel-preset": "^0.58.0",
+    "prettier": "^2.0.5",
     "react-test-renderer": "16.11.0",
-    "prettier": "^2.0.4",
     "typescript": "^3.8.3"
   },
   "jest": {
@@ -48,5 +49,11 @@
       "json",
       "node"
     ]
+  },
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 4,
+    "semi": true,
+    "singleQuote": true
   }
 }
