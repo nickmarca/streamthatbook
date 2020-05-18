@@ -1,22 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, TextInput } from 'react-native';
+import { Book } from '../types/book';
 import SearchSVG from '../svgs/search-svg';
 import useStateValue from '../hooks/use-state-value';
 import { ActionType } from '../constants/action-type';
+
+const searchBook = (keyword: string) => {
+    const BOOKS: Book[] = [
+        { title: 'Harry Potter', author: 'Jorge', coverURL: '/', id: '1' },
+        { title: 'Senhor dos Aneis', author: 'Peter', coverURL: '/', id: '2' },
+        { title: 'Como Fazer Amigos', author: 'Carl', coverURL: '/', id: '3' },
+    ];
+   
+    return BOOKS.filter(book => {
+       return book.title.includes(keyword);
+    });
+}
 
 const Search = () => {
     const [keyword, setKeyword] = useState('');
     const [, dispatch] = useStateValue();
 
-    const dispatchSearchRequest = () => {
+    const dispatchSearchRequest = (k: string) => () => {
        dispatch({
            type: ActionType.Search,
-           keyword: keyword.trim(),
+           payload: {
+               books: searchBook(k.trim())
+           },
        });
     };
 
     useEffect(() => {
-        const timeout = setTimeout(dispatchSearchRequest, 500);
+        const timeout = setTimeout(dispatchSearchRequest(keyword), 500);
 
         return () => clearTimeout(timeout);
     }, [keyword]);
